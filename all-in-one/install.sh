@@ -14,3 +14,17 @@ sudo systemctl enable docker
 # Download and run sample docker compose file
 wget https://raw.githubusercontent.com/matthansen0/azure-openmrs/main/all-in-one/docker-compose.yml
 sudo docker-compose up -d
+
+# Checking Web Service Status
+echo "Waiting for web services"
+until $(curl --output /dev/null --silent --head --fail http://127.0.0.1:8080/openmrs); do
+    printf '.'
+    sleep 5
+done
+
+# Checking Setup Status
+echo "Waiting for setup to complete"
+until $(curl --output /dev/null --silent --head --fail http://127.0.0.1:8080/openmrs/login.htm); do
+    printf '.'
+    sleep 5
+done
