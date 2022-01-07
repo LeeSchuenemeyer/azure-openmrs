@@ -24,10 +24,9 @@ done
 
 # Checking Setup Status
 echo "Waiting for setup to complete"
-while false; do
- if [[$(curl http://127.0.0.1:8080/openmrs/login.htm | grep -c username) -eq 0]]; then
-sleep 10
- fi
+until $(curl http://127.0.0.1:8080/openmrs/login.htm | grep -c username) -ge 1); do
+    printf '.'
+    sleep 5
 done
 
 echo "Setup is complete"
