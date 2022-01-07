@@ -295,32 +295,32 @@
                 }
             }
         },
-    {
-      "name": "OpenMRS/postinstall",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "apiVersion": "2021-03-01",
-      "location": "[resourceGroup().location]",
-      "tags": {
-        "displayName": "post install configuration verification"
-      },
-      "dependsOn": [
-        "[resourceId('Microsoft.Compute/virtualMachines/extensions', 'OpenMRS', 'docker')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Azure.Extensions",
-        "type": "CustomScript",
-        "typeHandlerVersion": "2.1",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "fileUris": [
-            "https://raw.githubusercontent.com/matthansen0/azure-openMRS/dev/all-in-one/serviceVerification.sh"
-          ]
-        },
-        "protectedSettings": {
-          "commandToExecute": "sh serviceVerification.sh"
+        {
+            "name": "OpenMRS/appconfig",
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "apiVersion": "2019-07-01",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "displayName": "application verification"
+            },
+            "dependsOn": [
+                "[parameters('vmName')]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.1",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "fileUris": [
+                        "https://raw.githubusercontent.com/matthansen0/azure-openMRS/dev/all-in-one/serviceVerification.sh"
+                    ]
+                },
+                "protectedSettings": {
+                    "commandToExecute": "sh serviceVerification.sh"
+                }
+            }
         }
-      }
-    }
   ],
   "outputs": {
     "adminUsername": {
